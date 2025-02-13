@@ -55,11 +55,35 @@ RSpec.describe StringCalculator do
         )
       end
     end
+
+    context 'when input_string contains number larger than 1000' do
+      let(:input_string) { '//;\n1;2;1001;1000' }
+      
+      it { is_expected.to eq(1003) }
+    end
+
+    context 'when input_string contains any number of delimeter' do
+      let(:input_string) { '//[***+]\n1***+2***+3' }
+      
+      it { is_expected.to eq(6) }
+    end
+
+    context 'when input_string contains any number of delimeter' do
+      let(:input_string) { '//[*][%]\n1*2%3' }
+      
+      it { is_expected.to eq(6) }
+    end
+
+    context 'when input_string contains any number of delimeter' do
+      let(:input_string) { '//[**][%%]\n1**2%%3' }
+      
+      it { is_expected.to eq(6) }
+    end
   end
 
   describe '.get_called_count' do
     it 'return no off times add called' do
-      expect(described_class.new('').get_called_count).to eq(8)
+      expect(described_class.new('').get_called_count).to eq(12)
     end
   end
 end

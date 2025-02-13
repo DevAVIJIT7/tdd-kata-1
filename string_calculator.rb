@@ -21,7 +21,13 @@ class StringCalculator
 
     raise NegativeError, "negatives not allowed #{negative_array.join(',')}" unless negative_array.empty?
 
-		covert_input_string_to_array.sum(&:to_i)
+    converted_array.reduce(0) do |acc, elem|
+      acc += if elem.to_i <= 1000
+        elem.to_i
+      else
+        0
+      end
+    end
   end
 
   def get_called_count
@@ -33,12 +39,9 @@ class StringCalculator
     def covert_input_string_to_array
       new_string = input_string
       if contains_custom_delimeter?
-        delimeter = custom_delimeter
-        BASE_DELIMETERS << delimeter
-        start_index = "//#{delimeter}\n".size
-        new_string = input_string[start_index+1..]
+        custom_delimeter
+        new_string = input_string.split('\n')[1]
       end
-      
       split_string(new_string)
     end
 
@@ -47,7 +50,19 @@ class StringCalculator
     end
 
     def custom_delimeter
-      input_string[2]
+      extracted_delimeter = input_string.split('\n')[0][2..]
+      if extracted_delimeter[0] != '['
+        BASE_DELIMETERS << extracted_delimeter
+        return
+      end
+      
+      if extracted_delimeter.include?('][')
+        BASE_DELIMETERS.concat(
+          extracted_delimeter.gsub!('][', ',')[1..extracted_delimeter.size-2].split(',')
+        )
+        return
+      end
+      BASE_DELIMETERS << extracted_delimeter[1..extracted_delimeter.size-2]
     end
 
     def split_string(new_string)
