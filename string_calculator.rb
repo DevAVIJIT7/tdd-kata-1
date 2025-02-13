@@ -1,6 +1,8 @@
 class StringCalculator
+  class NegativeError < StandardError; end;
+
   attr_accessor :input_string
-	
+	  
 	BASE_DELIMETERS = [',', '\n']
 
   def initialize(input_string)
@@ -10,6 +12,10 @@ class StringCalculator
   def add
 		return 0 if input_string.nil? || input_string.empty?
 		return input_string.to_i if input_string.size == 1
+
+    converted_array = covert_input_string_to_array
+    
+    raise NegativeError, 'negatives not allowed' if converted_array.any? { |elem| elem.to_i < 0 }
 
 		covert_input_string_to_array.sum(&:to_i)
   end
