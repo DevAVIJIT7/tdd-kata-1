@@ -1,23 +1,31 @@
 class StringCalculator
   class NegativeError < StandardError; end;
 
+  @@called_count = 0
   attr_accessor :input_string
 	  
 	BASE_DELIMETERS = [',', '\n']
 
   def initialize(input_string)
     @input_string = input_string
+    @called_count = 0
   end
 
   def add
+    @@called_count += 1
 		return 0 if input_string.nil? || input_string.empty?
 		return input_string.to_i if input_string.size == 1
 
     converted_array = covert_input_string_to_array
-    
-    raise NegativeError, 'negatives not allowed' if converted_array.any? { |elem| elem.to_i < 0 }
+    negative_array = converted_array.select { |elem| elem.to_i < 0 }
+
+    raise NegativeError, "negatives not allowed #{negative_array.join(',')}" unless negative_array.empty?
 
 		covert_input_string_to_array.sum(&:to_i)
+  end
+
+  def get_called_count
+    @@called_count
   end
   
   private
