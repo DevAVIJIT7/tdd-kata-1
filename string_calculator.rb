@@ -1,12 +1,19 @@
 class StringCalculator
-  attr_accessor :numbers
+  attr_accessor :input_string
 
-  def initialize(numbers)
-    @numbers = numbers
+  def initialize(input_string)
+    @input_string = input_string
   end
 
-  def calculator
-		return 0 if numbers.nil? || numbers.empty?
-		return numbers.to_i if numbers.size == 1
+  def add
+		return 0 if input_string.nil? || input_string.empty?
+		return input_string.to_i if input_string.size == 1
+
+		covert_input_string_to_array.sum(&:to_i)
   end
+
+	def covert_input_string_to_array
+		input_array = input_string.split(',')
+		input_array.map { |elem| elem.split('\n') }.compact.flatten
+	end
 end
