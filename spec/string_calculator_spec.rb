@@ -28,6 +28,12 @@ RSpec.describe StringCalculator do
       it { is_expected.to eq(6) }
     end
 
+    context 'when input_string contains comma separated numbers' do
+      let(:input_string) { '1,2,3,4,5,6,7,8,9,10' }
+      
+      it { is_expected.to eq(55) }
+    end
+
     context 'when input_string contains comma(,) and newline(\n) as delimeter' do
       let(:input_string) { '1\n2,3' }
       
@@ -79,11 +85,17 @@ RSpec.describe StringCalculator do
       
       it { is_expected.to eq(6) }
     end
+
+    context "when input_string contains any number of delimeter like '//[**][%%][^^][++][==]\n1**2%%3'" do
+      let(:input_string) { '//[**][%%][^^][++][==]\n1**2%%3^^4++5++6==7**8^^9%%10' }
+      
+      it { is_expected.to eq(55) }
+    end
   end
 
   describe '.get_called_count' do
     it 'return no off times add called' do
-      expect(described_class.new('').get_called_count).to eq(12)
+      expect(described_class.new('').get_called_count).to eq(14)
     end
   end
 end
