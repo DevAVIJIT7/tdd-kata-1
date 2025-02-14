@@ -8,9 +8,11 @@ class StringCalculator
 
   def initialize(input_string)
     @input_string = input_string
-    @called_count = 0
   end
 
+  # Calculated the method called count
+  # Return 0 for '' string and nil
+  # Do the sum and return the result
   def add
     @@called_count += 1
 		return 0 if input_string.nil? || input_string.empty?
@@ -30,16 +32,18 @@ class StringCalculator
     end
   end
 
+  # Gives the add method called count
   def get_called_count
     @@called_count
   end
   
   private
   
+    # Check for custom delimeter and split the input string
     def covert_input_string_to_array
       new_string = input_string
       if contains_custom_delimeter?
-        custom_delimeter
+        add_custom_delimeter
         new_string = input_string.split('\n')[1]
       end
       split_string(new_string)
@@ -49,7 +53,8 @@ class StringCalculator
       input_string[0..1] == '//'
     end
 
-    def custom_delimeter
+    # Add custom delimeter to base delimeter if any
+    def add_custom_delimeter
       extracted_delimeter = input_string.split('\n')[0][2..]
       if extracted_delimeter[0] != '['
         BASE_DELIMETERS << extracted_delimeter
@@ -65,6 +70,7 @@ class StringCalculator
       BASE_DELIMETERS << extracted_delimeter[1..extracted_delimeter.size-2]
     end
 
+    # split the array based on delimeters
     def split_string(new_string)
       sub_array = new_string.split(BASE_DELIMETERS[0])
       index = 1

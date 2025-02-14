@@ -62,19 +62,19 @@ RSpec.describe StringCalculator do
       it { is_expected.to eq(1003) }
     end
 
-    context 'when input_string contains any number of delimeter' do
+    context "when input_string contains any number of delimeter like '//[***+]\n1***+2***+3'" do
       let(:input_string) { '//[***+]\n1***+2***+3' }
       
       it { is_expected.to eq(6) }
     end
 
-    context 'when input_string contains any number of delimeter' do
+    context "when input_string contains any number of delimeter '//[*][%]\n1*2%3'" do
       let(:input_string) { '//[*][%]\n1*2%3' }
       
       it { is_expected.to eq(6) }
     end
 
-    context 'when input_string contains any number of delimeter' do
+    context "when input_string contains any number of delimeter like '//[**][%%]\n1**2%%3'" do
       let(:input_string) { '//[**][%%]\n1**2%%3' }
       
       it { is_expected.to eq(6) }
