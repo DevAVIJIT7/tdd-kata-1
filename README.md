@@ -2,7 +2,7 @@
 
 A simple string calculator
 
-### To test (or if bug, reproduction steps)
+### To test
 
 - Expected: rspec is installed on your machine.
 
